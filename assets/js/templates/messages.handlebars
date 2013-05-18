@@ -8,8 +8,10 @@
 
 <table class='table table-bordered'>
   {{#each controller}}
-    <tr class='message'>
-      <td class='name'>{{name}}</div>
+    <tr {{bindAttr class="isShowName::unborder-top"}}>
+      <td class='name'>
+        {{#if isShowName }}{{name}}{{/if }}
+      </div>
       <td class='content'>{{content}}</div>
     </tr>
   {{/each}}

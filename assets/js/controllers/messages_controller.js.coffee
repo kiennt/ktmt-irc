@@ -2,26 +2,27 @@ App = window.App
 
 App.MessagesController = Ember.ArrayController.extend
   isLoading: true,
+  lastTime: '',
 
-  setLastTime: (data) ->
-    @set('lastTime', data[data.length - 1].createdAt)
-    console.log(@get('lastTime'))
+  calculateShowName: ->
+    oldMsg = {}
+    for i in [0..@get('content').length - 1]
+      @get('content')[i].set('isShowName', @get('content')[i].name != oldMsg.name)
+      oldMsg = @get('content')[i]
 
-  loadHistory: ->
+  loadMessagesWithEndDate: (endDate) ->
     self = this
     self.set('isLoading', true)
-    $.getJSON '/messages', { end: @get('lastTime') }, (data) ->
+    $.getJSON '/messages', { end: endDate }, (data) ->
       for msg in data
-        self.insertAt(0, msg)
-      self.setLastTime(data)
+        self.insertAt(0, Ember.Object.create(msg))
+      self.calculateShowName()
+      self.set('lastTime', data[data.length - 1].createdAt)
       self.set('isLoading', false)
 
+  loadHistory: ->
+    @loadMessagesWithEndDate(@get('lastTime'))
+
   initMessages: ->
-    self = this
     @set('content', [])
-    $.getJSON '/messages', (data) ->
-      self.setLastTime(data)
-      data = data.reverse()
-      for msg in data
-        self.pushObject(msg)
-      self.set('isLoading', false)
+    @loadMessagesWithEndDate('')
