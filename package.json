@@ -11,6 +11,7 @@
     "mongoose": "*",
     "connect-assets": "*",
     "coffee-script": "*",
-    "mincer": "git://github.com/kiennt/mincer.git#master"
+    "mincer": "git://github.com/kiennt/mincer.git#master",
+    "socket.io": "*"
   }
 }

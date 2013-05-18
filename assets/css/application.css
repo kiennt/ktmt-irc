@@ -3,6 +3,13 @@
     padding-left: 0px;
 }
 
+.count-users {
+    float: right;
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
 #main {
     margin-top: 20px;
 }

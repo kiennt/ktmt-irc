@@ -7,3 +7,8 @@
 #= require      ./routes
 
 window.App = App = Ember.Application.create({LOG_TRANSITIONS: true})
+
+window.socket = socket = io.connect(window.location.hostname, {'sync disconnect on unload' : true})
+
+socket.on 'users', (data) ->
+  App.User.set('totalUsers', data.total)

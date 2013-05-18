@@ -5,6 +5,8 @@ path = require('path')
 mincer = require('mincer')
 
 app = express()
+server = http.createServer(app)
+io = require('socket.io').listen(server)
 
 environment = new mincer.Environment()
 environment.appendPath('assets/js')
@@ -27,5 +29,22 @@ app.configure 'development', ->
 
 app.get '/messages', messages.index
 
-http.createServer(app).listen app.get('port'), ->
+# Heroku won't actually allow us to use WebSockets
+# so we have to setup polling instead.
+# https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
+io.configure () ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+  io.enable('log')
+
+countUsers = 0
+io.sockets.on 'connection', (socket) ->
+  countUsers += 1
+  io.sockets.emit('users', {total: countUsers})
+
+  socket.on 'disconnect', ->
+    countUsers -= 1
+    io.sockets.emit('users', {total: countUsers})
+
+server.listen app.get('port'), ->
   console.log "Express server listening on port " + app.get('port')
