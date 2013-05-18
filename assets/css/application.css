@@ -13,6 +13,7 @@
 
 .unborder-top td {
     border-top: 0px solid #dddddd;
+    padding-top: 0px;
 }
 
 .name {
