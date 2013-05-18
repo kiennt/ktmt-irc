@@ -1,0 +1,16 @@
+<div class='load-history'>
+  {{#if controller.isLoading }}
+    <div>Loading message ...</div>
+  {{else}}
+    <a {{action loadHistory}}>Load more history</a>
+  {{/if}}
+</div>
+
+<table class='table table-bordered'>
+  {{#each controller}}
+    <tr class='message'>
+      <td class='name'>{{name}}</div>
+      <td class='content'>{{content}}</div>
+    </tr>
+  {{/each}}
+</table>
