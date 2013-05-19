@@ -16,4 +16,4 @@ socket.on 'users', (data) ->
 socket.on 'message', (data) ->
   App.Messages.pushObject Ember.Object.create(data)
   App.Messages.calculateName()
-  $(window).scrollTop $(document).height()
+  $(window).scrollTop($(document).height() + 100)
