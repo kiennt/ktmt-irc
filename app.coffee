@@ -9,6 +9,7 @@ server = http.createServer(app)
 io = require('socket.io').listen(server)
 
 environment = new mincer.Environment()
+environment.appendPath('assets')
 environment.appendPath('assets/js')
 environment.appendPath('assets/css')
 
@@ -35,7 +36,6 @@ app.get '/messages', messages.index
 io.configure () ->
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
-  io.enable('log')
 
 countUsers = 0
 io.sockets.on 'connection', (socket) ->

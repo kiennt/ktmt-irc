@@ -7,9 +7,8 @@
   },
   "dependencies": {
     "express": "3.1.0",
-    "jade": "*",
     "mongoose": "*",
-    "connect-assets": "*",
+    "request": "*",
     "coffee-script": "*",
     "mincer": "git://github.com/kiennt/mincer.git#master",
     "socket.io": "*"
