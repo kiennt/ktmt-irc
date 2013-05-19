@@ -7,7 +7,7 @@
 </div>
 
 <table class='table table-bordered'>
-  {{#each controller}}
+  {{#each controller.messages}}
     <tr {{bindAttr class="isShowName::unborder-top"}}>
       <td class='name'>
         {{#if isShowName }}{{name}}{{/if }}

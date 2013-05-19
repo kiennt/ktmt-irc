@@ -11,6 +11,7 @@
     "request": "*",
     "coffee-script": "*",
     "mincer": "git://github.com/kiennt/mincer.git#master",
-    "socket.io": "*"
+    "socket.io": "*",
+    "irc": "*"
   }
 }

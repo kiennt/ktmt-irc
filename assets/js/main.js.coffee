@@ -12,3 +12,8 @@ window.socket = socket = io.connect(window.location.hostname, {'sync disconnect 
 
 socket.on 'users', (data) ->
   App.User.set('totalUsers', data.total)
+
+socket.on 'message', (data) ->
+  App.Messages.pushObject Ember.Object.create(data)
+  App.Messages.calculateName()
+  $(window).scrollTop $(document).height()

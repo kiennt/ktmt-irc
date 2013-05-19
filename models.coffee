@@ -9,5 +9,6 @@ ChatLogSchema = mongoose.Schema
     index: true,
     default: Date.now
 
+console.log 'connect to database'
 
 exports.ChatLog = mongoose.model 'chatlog', ChatLogSchema
