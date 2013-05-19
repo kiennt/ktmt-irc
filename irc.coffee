@@ -1,3 +1,5 @@
+# borrow from hubot-irc https://github.com/nandub/hubot-irc
+
 irc = require('irc')
 
 module.exports = (app) ->
