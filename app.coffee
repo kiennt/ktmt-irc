@@ -6,6 +6,10 @@ messages = require('./routes/messages')
 
 app = express()
 server = http.createServer(app)
+auth = express.basicAuth((user, pass) ->
+     return (user ==  process.env.IRCWEB_USR && pass == process.env.IRCWEB_PWD)
+   ,'Super duper secret area')
+
 
 environment = new mincer.Environment()
 environment.appendPath('assets')
@@ -27,7 +31,7 @@ app.configure ->
 app.configure 'development', ->
   app.use express.errorHandler()
 
-app.get '/messages', messages.index
+app.get '/messages', auth,  messages.index
 
 app.io = require('socket.io').listen(server)
 require('./socket')(app, server)
