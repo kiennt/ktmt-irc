@@ -25,6 +25,11 @@
       </td>
 
       <td class='right-column'>
+        <div class='action'>
+          <a {{action toggleRealtime}}>
+            Turn {{#if controller.isRealtimeMessage}}off{{else}}on{{/if}} realtime message
+          </a>
+        </div>
         <div id='chat-users'>
           <ul>
             {{#each controller.users}}

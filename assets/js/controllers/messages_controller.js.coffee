@@ -3,7 +3,11 @@ App = window.App
 App.MessagesController = Ember.Controller.extend
   messages: App.Messages
 
+  isRealtimeMessage: true
+
   users: App.ChatUsers
+
+  cachedMessages: []
 
   isLoading: true
 
@@ -23,6 +27,40 @@ App.MessagesController = Ember.Controller.extend
   loadHistory: ->
     @loadMessagesWithEndDate(@get('lastTime'))
 
+  toggleRealtime: ->
+    @set('isRealtimeMessage', not @get('isRealtimeMessage'))
+    if @get('isRealtimeMessage')
+      for message in @cachedMessages
+        App.Messages.pushObject Ember.Object.create(message)
+        App.Messages.calculateName()
+        $(window).scrollTop($(document).height() + 100)
+      @cachedMessages = []
+
   initMessages: ->
     @messages.set('content', [])
     @loadMessagesWithEndDate('')
+
+  init: ->
+    self = this
+
+    @socket = io.connect(window.location.hostname, {'sync disconnect on unload' : true})
+
+    @socket.on 'users', (data) ->
+      App.User.set('totalUsers', data.total)
+
+    @socket.on 'message', (data) ->
+      if self.get('isRealtimeMessage')
+        App.Messages.pushObject Ember.Object.create(data)
+        App.Messages.calculateName()
+        $(window).scrollTop($(document).height() + 100)
+      else
+        self.cachedMessages.push(data)
+
+    @socket.on 'chatusers', (data) ->
+      if data.message == 'init'
+        for name in data.names
+          App.ChatUsers.createUser(name)
+      else if data.message == 'join'
+        App.ChatUsers.createUser(name)
+      else if data.message == 'left'
+        App.ChatUsers.removeUser(name)

@@ -4,6 +4,7 @@ irc = require('irc')
 
 module.exports = (app) ->
   app.users = []
+
   findUser = (nick) ->
     for user in app.users
       if user == nick
