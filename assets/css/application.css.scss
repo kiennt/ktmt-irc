@@ -59,6 +59,9 @@ body {
         margin-bottom: 0px;
       }
 
+      .unborder-top {
+        border-top: 0px solid #dddddd;
+      }
 
       .name {
         font-weight: bold;
@@ -75,7 +78,10 @@ body {
       ul {
         list-style: none;
         margin: 0px;
-        padding: 8px;
+
+        li {
+          padding: 8px;
+        }
       }
     }
   }
