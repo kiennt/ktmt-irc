@@ -16,7 +16,9 @@ module.exports = (app) ->
       app.users.push(nick)
 
   removeUser = (nick) ->
-    app.users.removeObject(nick)
+    for i in [0..app.users.length]
+      if app.users[i] == nick
+        return app.users.splice(i, 1)
 
   options =
     nick:     process.env.IRC_NICK
@@ -53,6 +55,11 @@ module.exports = (app) ->
     app.io.sockets.emit 'chatusers', message: 'join', name: who
 
   bot.addListener 'part', (channel, who, reason) ->
+    console.log('%s has left %s: %s', who, channel, reason)
+    removeUser(who)
+    app.io.sockets.emit 'chatusers', message: 'left', name: who
+
+  bot.addListener 'quit', (who, reason, channel) ->
     console.log('%s has left %s: %s', who, channel, reason)
     removeUser(who)
     app.io.sockets.emit 'chatusers', message: 'left', name: who

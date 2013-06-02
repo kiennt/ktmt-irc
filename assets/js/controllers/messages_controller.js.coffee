@@ -57,10 +57,11 @@ App.MessagesController = Ember.Controller.extend
         self.cachedMessages.push(data)
 
     @socket.on 'chatusers', (data) ->
+      console.log(data)
       if data.message == 'init'
         for name in data.names
           App.ChatUsers.createUser(name)
       else if data.message == 'join'
-        App.ChatUsers.createUser(name)
+        App.ChatUsers.createUser(data.name)
       else if data.message == 'left'
-        App.ChatUsers.removeUser(name)
+        App.ChatUsers.removeUser(data.name)
