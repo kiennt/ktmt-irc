@@ -3,6 +3,20 @@
 irc = require('irc')
 
 module.exports = (app) ->
+  app.users = []
+  findUser = (nick) ->
+    for user in app.users
+      if user == nick
+        return user
+
+  createUser = (nick) ->
+    user = findUser(nick)
+    if user == undefined
+      app.users.push(nick)
+
+  removeUser = (nick) ->
+    app.users.removeObject(nick)
+
   options =
     nick:     process.env.IRC_NICK
     realName: process.env.IRC_REALNAME
@@ -34,12 +48,21 @@ module.exports = (app) ->
 
   bot.addListener 'join', (channel, who) ->
     console.log('%s has joined %s', who, channel)
+    createUser(who)
+    app.io.sockets.emit 'chatusers', message: 'join', name: who
 
   bot.addListener 'part', (channel, who, reason) ->
     console.log('%s has left %s: %s', who, channel, reason)
+    removeUser(who)
+    app.io.sockets.emit 'chatusers', message: 'left', name: who
 
   bot.addListener 'kick', (channel, who, _by, reason) ->
     console.log('%s was kicked from %s by %s: %s', who, channel, _by, reason)
 
   bot.addListener 'invite', (channel, from) ->
     console.log('%s invite you to join %s', from, channel)
+
+  bot.addListener 'names', (channel, nicks) ->
+    for nick of nicks
+      console.log(nick)
+      createUser(nick)

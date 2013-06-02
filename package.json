@@ -10,6 +10,7 @@
     "mongoose": "*",
     "request": "*",
     "coffee-script": "*",
+    "node-sass": "*",
     "mincer": "git://github.com/kiennt/mincer.git#master",
     "socket.io": "*",
     "irc": "*",

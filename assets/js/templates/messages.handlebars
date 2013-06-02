@@ -1,18 +1,38 @@
-<div class='load-history'>
-  {{#if controller.isLoading }}
-    <div>Loading message ...</div>
-  {{else}}
-    <a {{action loadHistory}}>Load more history</a>
-  {{/if}}
-</div>
+<div id='main-chat'>
+  <table class='table table-bordered'>
+    <tr>
+      <td class='left-column'>
+        <div class='load-history'>
+          {{#if controller.isLoading }}
+            <div>Loading message ...</div>
+          {{else}}
+            <a {{action loadHistory}}>Load more history</a>
+          {{/if}}
+        </div>
 
-<table class='table table-bordered'>
-  {{#each controller.messages}}
-    <tr {{bindAttr class="isShowName::unborder-top"}}>
-      <td class='name'>
-        {{#if isShowName }}{{name}}{{/if }}
-      </div>
-      <td class='content'>{{content}}</div>
+        <div id='chat-content'>
+          <table class='table table-unbordered'>
+            {{#each controller.messages}}
+              <tr {{bindAttr class="isShowName::unborder-top"}}>
+                <td class='name'>
+                  {{#if isShowName }}{{name}}{{/if }}
+                </div>
+                <td class='content'>{{content}}</div>
+              </tr>
+            {{/each}}
+          </table>
+        </div>
+      </td>
+
+      <td class='right-column'>
+        <div id='chat-users'>
+          <ul>
+            {{#each controller.users}}
+            <li>{{name}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </td>
     </tr>
-  {{/each}}
-</table>
+  </table>
+</div>

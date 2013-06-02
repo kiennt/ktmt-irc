@@ -17,3 +17,6 @@ module.exports = (app, server) ->
     socket.on 'disconnect', ->
       countUsers -= 1
       app.io.sockets.emit('users', {total: countUsers})
+
+    # handle chat users
+    socket.emit('chatusers', {message: 'init', names: app.users})
