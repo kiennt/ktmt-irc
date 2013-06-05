@@ -14,9 +14,9 @@ isImage = (url) ->
   url.endsWith('.jpg') or url.endsWith('.jpeg') or url.endsWith('.gif') or url.endsWith('.png')
 
 
-Handlebars.registerHelper "urlify", () ->
+Ember.Handlebars.registerBoundHelper "urlify", (rawText) ->
   urlRegex = /(https?:\/\/[^\s]+)/g
-  text = this.content.replace urlRegex, (url) ->
+  text = rawText.replace urlRegex, (url) ->
     if url.length > 30
       urlText = url.substr(0, 27) + '...'
     text = "<a target=\"_blank\" href=\"#{url}\">#{urlText}</a>"
