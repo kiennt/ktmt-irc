@@ -1,6 +1,7 @@
 # borrow from hubot-irc https://github.com/nandub/hubot-irc
 
 irc = require('irc')
+models = require('./models')
 
 module.exports = (app) ->
   app.users = []
@@ -38,10 +39,15 @@ module.exports = (app) ->
     if options.nick.toLowerCase() == to.toLowerCase()
       # this is a private message, let the 'pm' listener handle it
       return
-
     console.log "From #{from} to #{to}: #{message}"
+
+    # broadcast to all users
     app.io.sockets.emit 'message',
       name: from, content: message, createdAt: new Date()
+
+    # store message
+    log = new models.ChatLog({name: from, content: message, createdAt: new Date()})
+    log.save()
 
   bot.addListener 'error', (message) ->
     console.error('ERROR: %s: %s', message.command, message.args.join(' '))
