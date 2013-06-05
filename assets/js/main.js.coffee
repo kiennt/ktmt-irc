@@ -7,4 +7,3 @@
 #= require      ./routes
 
 window.App = App = Ember.Application.create({LOG_TRANSITIONS: true})
-
