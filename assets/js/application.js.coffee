@@ -18,7 +18,10 @@ Ember.Handlebars.registerBoundHelper "urlify", (rawText) ->
   urlRegex = /(https?:\/\/[^\s]+)/g
   text = rawText.replace urlRegex, (url) ->
     if url.length > 30
-      urlText = url.substr(0, 27) + '...'
+      urlText = "#{url.substr(0, 27)}..."
+    else
+      urlText = url
+
     text = "<a target=\"_blank\" href=\"#{url}\">#{urlText}</a>"
     if isImage(url)
       text += "<br /><img src=\"#{url}\" width=200 />"
