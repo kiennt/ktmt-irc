@@ -4,6 +4,7 @@
 #= require_tree ./views
 #= require_tree ./templates
 #= require_tree ./routes
-#= require      ./routes
+#= require_tree ./helpers
+#= require ./routes
 
 window.App = App = Ember.Application.create({LOG_TRANSITIONS: true})

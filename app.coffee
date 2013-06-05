@@ -16,6 +16,8 @@ environment = new mincer.Environment()
 environment.appendPath('assets')
 environment.appendPath('assets/js')
 environment.appendPath('assets/css')
+environment.appendPath('assets/vendor')
+environment.appendPath('libs')
 
 app.configure ->
   app.set 'port', process.env.PORT || 3000
