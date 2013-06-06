@@ -10,7 +10,7 @@ Ember.Handlebars.registerBoundHelper "date", (dateString) ->
   date = new Date(dateString)
 
   year = date.getYear()
-  month = months[date.getMonth()]
+  month = date.getMonth()
   day = date.getDate()
   hour = zeroPad date.getHours()
   minute = zeroPad date.getMinutes()
@@ -18,4 +18,4 @@ Ember.Handlebars.registerBoundHelper "date", (dateString) ->
   if year == currentDate.getYear() and month == currentDate.getMonth() and day == currentDate.getDate()
     "#{hour}:#{minute}"
   else
-    "#{month}-#{zeroPad(day)} #{hour}:#{minute}"
+    "#{months[month]}-#{zeroPad(day)} #{hour}:#{minute}"
