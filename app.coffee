@@ -4,7 +4,8 @@ if process.env.NODETIME_ACCOUNT_KEY
     appName: 'ktmt-irc'
 
 express = require('express')
-http = require('http') path = require('path')
+http = require('http')
+path = require('path')
 mincer = require('mincer')
 messages = require('./routes/messages')
 
@@ -22,8 +23,10 @@ app.configure ->
   app.set 'port', process.env.PORT || 3000
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
+
   app.use express.basicAuth (usr, pwd)->
     (usr == process.env.IRCWEB_USERNAME && pwd == process.env.IRCWEB_PASSWORD)
+
 
   app.use express.favicon()
   app.use express.logger('dev')
