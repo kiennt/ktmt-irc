@@ -14,3 +14,7 @@
 /.sass-cache
 node_modules
 run.sh
+
+#vim artifacts
+*.swo
+*.swp

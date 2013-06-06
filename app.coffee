@@ -23,6 +23,9 @@ app.configure ->
   app.set 'port', process.env.PORT || 3000
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
+  app.use express.basicAuth (usr, pwd)->
+            (usr == process.env.IRCWEB_USR && pwd == process.env.IRCWEB_PWD)
+             
   app.use express.favicon()
   app.use express.logger('dev')
   app.use express.bodyParser()
@@ -30,6 +33,7 @@ app.configure ->
   app.use app.router
   app.use express.static(path.join(__dirname, 'public'))
   app.use '/assets', mincer.createServer(environment)
+  
 
 app.configure 'development', ->
   app.use express.errorHandler()
