@@ -6,10 +6,6 @@ messages = require('./routes/messages')
 
 app = express()
 server = http.createServer(app)
-auth = express.basicAuth((user, pass) ->
-     return (user ==  process.env.IRCWEB_USR && pass == process.env.IRCWEB_PWD)
-   ,'Super duper secret area')
-
 
 environment = new mincer.Environment()
 environment.appendPath('assets')
@@ -20,6 +16,9 @@ app.configure ->
   app.set 'port', process.env.PORT || 3000
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
+  app.use express.basicAuth (usr, pwd)->
+            (usr == process.env.IRCWEB_USR && pwd == process.env.IRCWEB_PWD)
+             
   app.use express.favicon()
   app.use express.logger('dev')
   app.use express.bodyParser()
@@ -27,11 +26,12 @@ app.configure ->
   app.use app.router
   app.use express.static(path.join(__dirname, 'public'))
   app.use '/assets', mincer.createServer(environment)
+  
 
 app.configure 'development', ->
   app.use express.errorHandler()
 
-app.get '/messages', auth,  messages.index
+app.get '/messages', messages.index
 
 app.io = require('socket.io').listen(server)
 require('./socket')(app, server)
