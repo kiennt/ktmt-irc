@@ -16,8 +16,13 @@
               <tr {{bindAttr class="isShowName::unborder-top"}}>
                 <td class='name'>
                   {{#if isShowName }}{{name}}{{/if }}
-                </div>
-                <td class='content'>{{urlify content}}</div>
+                </td>
+                <td class='content'>
+                  {{urlify content}}
+                  {{#if isShowName }}
+                    <div class='createdAt'>{{date createdAt}}</div>
+                  {{/if}}
+                </td>
               </tr>
             {{/each}}
           </table>
