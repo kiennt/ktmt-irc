@@ -1,6 +1,6 @@
-Ember.Handlebars.registerBoundHelper "urlify", (rawText) ->
+urlify = (rawText) ->
   urlRegex = /(https?:\/\/[^\s]+)/g
-  text = rawText.replace urlRegex, (url) ->
+  rawText.replace urlRegex, (url) ->
     if url.length > 30
       urlText = "#{url.substr(0, 27)}..."
     else
@@ -11,4 +11,5 @@ Ember.Handlebars.registerBoundHelper "urlify", (rawText) ->
       text += "<br /><img src=\"#{url}\" width=200 />"
     text
 
-  new Handlebars.SafeString text
+Ember.Handlebars.registerBoundHelper "urlify", (rawText) ->
+  new Handlebars.SafeString urlify(rawText)
