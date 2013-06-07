@@ -18,3 +18,4 @@ run.sh
 #vim artifacts
 *.swo
 *.swp
+*.DS_Store
