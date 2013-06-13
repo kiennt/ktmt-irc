@@ -24,8 +24,9 @@ app.configure ->
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
 
-  app.use express.basicAuth (usr, pwd)->
-    (usr == process.env.IRCWEB_USERNAME && pwd == process.env.IRCWEB_PASSWORD)
+  if process.env.USE_BASIC_AUTHENTICATE
+    app.use express.basicAuth (usr, pwd)->
+      (usr == process.env.IRCWEB_USERNAME && pwd == process.env.IRCWEB_PASSWORD)
 
 
   app.use express.favicon()
