@@ -8,7 +8,6 @@ isSameDate = (date1, date2) ->
 
 
 Ember.Handlebars.registerBoundHelper "date", (dateString) ->
-  console.log(dateString)
   months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
   currentDate = new Date()
   date = new Date(dateString)

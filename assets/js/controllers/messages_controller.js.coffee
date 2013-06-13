@@ -57,7 +57,6 @@ App.MessagesController = Ember.Controller.extend
         self.cachedMessages.push(data)
 
     @socket.on 'chatusers', (data) ->
-      console.log(data)
       if data.message == 'init'
         for name in data.names
           App.ChatUsers.createUser(name)
