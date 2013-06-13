@@ -1,6 +1,8 @@
-request = require('request')
-request 'http://ktmt-irc.herokuapp.com/', (error, response, body) ->
-  console.log(body)
+sites = process.env.PING_SITES
 
-request 'http://streamslide-staging.herokuapp.com/', (error, response, body) ->
-  console.log(body)
+if sites
+  request = require('request')
+  console.log(sites)
+  for site in sites.split(',')
+    request.get site, (error, response, body) ->
+      console.log(body)
