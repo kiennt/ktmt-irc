@@ -8,6 +8,7 @@ module.exports = (app) ->
     realName: process.env.IRC_REALNAME
     rooms:    process.env.IRC_ROOMS.split(",")
     server:   process.env.IRC_SERVER
+    welcomeMes: process.env.IRC_WELCOME_MESSAGE
 
   client_options =
     userName: options.nick
@@ -16,6 +17,9 @@ module.exports = (app) ->
   client_options['channels'] = options.rooms
 
   bot = new irc.Client options.server, options.nick, client_options
+  
+  makeWelcomeMes = (who) ->
+    "hi " + who + " " + options.welcomeMes
 
   bot.addListener 'message', (from, to, message) ->
     if options.nick.toLowerCase() == to.toLowerCase()
@@ -34,6 +38,7 @@ module.exports = (app) ->
 
   bot.addListener 'join', (channel, who) ->
     console.log('%s has joined %s', who, channel)
+    bot.say(channel, makeWelcomeMes(who))
 
   bot.addListener 'part', (channel, who, reason) ->
     console.log('%s has left %s: %s', who, channel, reason)
