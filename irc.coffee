@@ -64,7 +64,8 @@ module.exports = (app) ->
     createUser(who)
     app.io.sockets.emit 'chatusers', message: 'join', name: who
 
-    bot.say(channel, makeWelcomeMes(who))
+    if process.env.IRC_WELCOME_MESSAGE
+      bot.say(channel, makeWelcomeMes(who))
 
   bot.addListener 'part', (channel, who, reason) ->
     console.log('%s has left %s: %s', who, channel, reason)
